@@ -1,0 +1,590 @@
+/* ГЛОБАЛНИ НАСТРОЙКИ И ЦВЕТОВЕ */
+:root {
+    --bg-black: #0a0a0a;
+    --dark-grey: #1c1c1c;
+    --blood-red: #8b0000;
+    --bright-red: #ff0000;
+    --text-light: #dcdcdc;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    /* Създава радиален градиент - много тъмен кърваво-червен нюанс в центъра, преливащ в дълбоко черно */
+    background: radial-gradient(circle at center, #160404 0%, #0a0a0a 60%, #020202 100%);
+    background-attachment: fixed; /* Фонът остава застопорен на екрана, докато скролваш, което подсилва 3D усещането */
+    color: var(--text-light);
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+h1, h2, h3 {
+    font-family: 'Cinzel', serif;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+/* 1. НАЧАЛНА СТРАНИЦА (HERO SECTION) И МЪГЛА */
+.hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(rgba(10, 10, 10, 0.85), rgba(10, 10, 10, 0.95)), url('hero-bg.jpg') no-repeat center center/cover;
+    padding: 20px;
+    text-align: center;
+    overflow: hidden;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 5;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    color: var(--text-light);
+    animation: pulse-glow 3s infinite alternate;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 20px 0 40px 0;
+    color: #aaaaaa;
+    font-style: italic;
+}
+
+/* МЪГЛА БЕЗ КАРТИНКИ - ИЗЦЯЛО С CSS */
+.fog-layer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 200%;
+    height: 60%;
+    pointer-events: none;
+}
+
+.fog-layer-1 {
+    z-index: 2;
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(230, 230, 230, 0.15) 30%,
+        rgba(200, 200, 200, 0.25) 70%,
+        rgba(10, 10, 10, 0.9) 100%
+    );
+    filter: blur(15px);
+    animation: fog-wave-left 25s ease-in-out infinite alternate;
+}
+
+.fog-layer-2 {
+    z-index: 3;
+    background: linear-gradient(
+        to top,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(240, 240, 240, 0.1) 40%,
+        rgba(220, 220, 220, 0.18) 80%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    filter: blur(25px);
+    bottom: 10%;
+    animation: fog-wave-right 40s ease-in-out infinite alternate;
+}
+
+@keyframes fog-wave-left {
+    0% {
+        transform: scale(1) translate3d(0, 0, 0) skewY(-1deg);
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 0.9;
+    }
+    100% {
+        transform: scale(1.1) translate3d(-30%, 5px, 0) skewY(1deg);
+        opacity: 0.5;
+    }
+}
+
+@keyframes fog-wave-right {
+    0% {
+        transform: scale(1.2) translate3d(-20%, 0, 0);
+        opacity: 0.4;
+    }
+    100% {
+        transform: scale(1) translate3d(10%, -10px, 0);
+        opacity: 0.8;
+    }
+}
+
+@keyframes move-fog {
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes pulse-glow {
+    0% { text-shadow: 0 0 10px rgba(139, 0, 0, 0.5), 0 0 20px rgba(139, 0, 0, 0.3); }
+    100% {
+        text-shadow: 0 0 20px var(--bright-red), 0 0 30px var(--blood-red);
+        color: #ffffff;
+    }
+}
+
+.btn-scroll {
+    background: transparent;
+    border: 2px solid var(--blood-red);
+    color: var(--text-light);
+    padding: 12px 30px;
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    text-decoration: none;
+}
+
+.btn-scroll:hover {
+    background: var(--blood-red);
+    box-shadow: 0 0 15px var(--bright-red);
+    transform: translateY(-3px);
+}
+
+/* КОНТЕЙНЕРИ ЗА ОБЩИТЕ СЕКЦИИ */
+section {
+    padding: 80px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    color: var(--blood-red);
+    margin-bottom: 50px;
+    border-bottom: 1px solid #222;
+    padding-bottom: 15px;
+}
+
+/* 2. СЕКЦИЯ ГЕРОИ И МЕСТА (РАЗДЕЛЕНИ СТИЛОВЕ) */
+.grid-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+}
+
+.card {
+    background-color: var(--dark-grey);
+    border: 1px solid #2a2a2a;
+    border-radius: 4px;
+    width: 340px;
+    overflow: hidden;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    border-color: var(--blood-red);
+}
+
+/* --- СТИЛ САМО ЗА МЕСТАТА (Оригинален Хорър Зуум) --- */
+.img-container.places-container {
+    width: 100%;
+    height: 400px;
+    overflow: hidden; /* ВАЖНО: Реже снимката, когато се увеличи */
+    background-color: #111;
+}
+
+.img-container.places-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease, filter 0.5s ease;
+    filter: grayscale(40%) brightness(80%);
+}
+
+/* Ефект при посочване на карта за МЕСТО: Зуум + Цвят */
+.card:hover .img-container.places-container img {
+    transform: scale(1.1);
+    filter: grayscale(0%) brightness(100%);
+}
+
+
+/* --- СТИЛ САМО ЗА ПЕРСОНАЖИТЕ (3D Вървене) --- */
+.img-container.flip-container {
+    width: 100%;
+    height: 400px;
+    background-color: #111;
+    perspective: 1000px;
+    overflow: visible; /* ВАЖНО: Позволява 3D въртенето */
+}
+
+.flipper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+}
+
+.card:hover .flipper {
+    transform: rotateY(180deg);
+}
+
+.front-photo, .back-photo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    backface-visibility: hidden;
+    transition: filter 0.5s ease;
+}
+
+.front-photo {
+    z-index: 2;
+    transform: rotateY(0deg);
+    filter: grayscale(40%);
+}
+
+.card:hover .front-photo {
+    filter: grayscale(0%);
+}
+
+.back-photo {
+    transform: rotateY(180deg);
+    filter: brightness(70%) contrast(120%) saturate(50%) sepia(30%);
+}
+
+
+/* --- ОБЩ КАРД КОНТЕНТ --- */
+.card-content {
+    padding: 20px;
+    position: relative;
+    z-index: 10;
+    background-color: var(--dark-grey);
+}
+
+.card-content h3 {
+    text-align: left;
+    color: #ffffff;
+    margin-bottom: 5px;
+}
+
+.role-tag {
+    font-size: 0.85rem;
+    color: var(--blood-red);
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+    display: inline-block;
+}
+
+.card-content p {
+    font-size: 0.95rem;
+    color: #b3b3b3;
+    margin-bottom: 10px;
+}
+
+/* Контейнерът за снимката става 3D сцена */
+.img-container.flip-container {
+    width: 100%;
+    height: 400px; /* Връщаме оригиналната ти височина от 400px */
+    background-color: #111;
+    perspective: 1000px; /* Активира 3D дълбочина */
+    overflow: visible;  /* ВАЖНО: позволява на 3D елемента да се върти правилно */
+}
+
+/* Самата 3D папка, която реално се върти */
+.flipper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+}
+
+/* Ефектът при посочване: Въртим flipper кутията на 180 градуса по Y */
+.card:hover .flipper {
+    transform: rotateY(180deg);
+}
+
+.front-photo, .back-photo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    backface-visibility: hidden;
+}
+
+.front-photo {
+    z-index: 2;
+    transform: rotateY(0deg);
+    filter: grayscale(40%);
+    transition: filter 0.5s ease; /* Ефектът за преливане остава САМО за предната снимка */
+}
+
+.card:hover .front-photo {
+    filter: grayscale(0%);
+}
+
+/* ЗАДНАТА СНИМКА - НАПЪЛНО ЧИСТА, БЕЗ ЕФЕКТИ И БЕЗ ЗАТЪМНЯВАНЕ */
+.back-photo {
+    transform: rotateY(180deg);
+    filter: none !important; /* Форсира браузъра да изключи всякакви филтри */
+}
+
+.card-content {
+    padding: 20px;
+    position: relative;
+    z-index: 10; /* Сигурност, че текстът винаги ще е над въртящата се снимка */
+    background-color: var(--dark-grey);
+}
+
+.card-content h3 {
+    text-align: left;
+    color: #ffffff;
+    margin-bottom: 5px;
+}
+
+.role-tag {
+    font-size: 0.85rem;
+    color: var(--blood-red);
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+    display: inline-block;
+}
+
+.card-content p {
+    font-size: 0.95rem;
+    color: #b3b3b3;
+    margin-bottom: 10px;
+}
+
+/* 3. ОБНОВЕНА СЕКЦИЯ ИСТОРИЯ (СТРАНИЦИ И БУТОНИ) */
+.story-container {
+    position: relative;
+    max-width: 850px;
+    margin: 0 auto;
+    background-color: var(--dark-grey);
+    padding: 40px;
+    border-radius: 4px;
+    border: 1px solid #222;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+}
+
+.story-page {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.story-page.active {
+    display: block;
+    opacity: 1;
+    animation: fadeInStory 0.6s ease-in-out;
+}
+
+@keyframes fadeInStory {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.story-page h3 {
+    text-align: left;
+    color: var(--blood-red);
+    margin-bottom: 25px;
+    font-size: 1.6rem;
+    border-left: 4px solid var(--blood-red);
+    padding-left: 15px;
+}
+
+.story-text {
+    font-size: 1.1rem;
+    color: #e0e0e0;
+    text-align: justify;
+    white-space: pre-line;
+    margin-bottom: 40px;
+}
+
+.story-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #2a2a2a;
+    padding-top: 25px;
+}
+
+.story-navigation button {
+    background: transparent;
+    border: 1px solid var(--blood-red);
+    color: var(--text-light);
+    padding: 10px 20px;
+    font-family: 'Cinzel', serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.story-navigation button:hover:not(:disabled) {
+    background-color: var(--blood-red);
+    box-shadow: 0 0 10px var(--bright-red);
+}
+
+.story-navigation button:disabled {
+    border-color: #444;
+    color: #555;
+    cursor: not-allowed;
+}
+
+#page-indicator {
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    color: #888;
+}
+
+/* ФУТЪР */
+footer {
+    text-align: center;
+    padding: 40px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    color: #555555;
+    border-top: 1px solid #111;
+}
+
+.story-image {
+    width: 100%;
+    max-height: 380px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin: 15px 0 30px 0;
+    border: 1px solid #2a2a2a;
+    filter: grayscale(30%) brightness(80%);
+    transition: all 0.5s ease;
+}
+
+.story-image:hover {
+    filter: grayscale(0%) brightness(100%);
+    box-shadow: 0 0 15px rgba(139, 0, 0, 0.4);
+}
+
+/* ЕФЕКТ ИНТЕРАКТИВЕН ФЕНЕР */
+.flashlight {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+    pointer-events: none;
+    background: rgba(0, 0, 0, 0.98);
+}
+
+@media (pointer: fine) {
+    .flashlight {
+        background: radial-gradient(
+            circle 480px at var(--X, 50%) var(--Y, 50%),
+            rgba(0, 0, 0, 0) 0%,
+            rgba(0, 0, 0, 0.8) 60%,
+            rgba(0, 0, 0, 0.98) 100%
+        );
+    }
+}
+
+/* ЕФЕКТ: КЪРВАВИ СЛЕДИ ПРИ КЛИК */
+.blood-splatter {
+    position: fixed;
+    width: 55px;
+    height: 55px;
+    background-color: #8b0000;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10000;
+    transform: translate(-50%, -50%);
+    mix-blend-mode: multiply;
+    opacity: 0.85;
+    animation: fade-out-blood 1.5s forwards ease-out;
+}
+
+.blood-splatter::before, .blood-splatter::after {
+    content: '';
+    position: absolute;
+    background-color: #700000;
+    border-radius: 50%;
+}
+
+.blood-splatter::before {
+    width: 22px;
+    height: 26px;
+    left: -16px;
+    top: 12px;
+}
+
+.blood-splatter::after {
+    width: 14px;
+    height: 14px;
+    right: -10px;
+    top: -8px;
+}
+
+@keyframes fade-out-blood {
+    0% {
+        transform: translate(-50%, -50%) scale(0.3);
+        filter: blur(1px);
+    }
+    15% {
+        transform: translate(-50%, -50%) scale(1);
+        filter: blur(0px);
+    }
+    100% {
+        transform: translate(-50%, calc(-50% + 35px)) scale(1.15);
+        opacity: 0;
+        filter: blur(4px);
+    }
+}
+
+/* ЕФЕКТ: ГЛОБАЛНА ГРЪМОТЕВИЦА */
+body.lightning-active::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.92);
+    z-index: 99999;
+    pointer-events: none;
+    mix-blend-mode: color-dodge;
+}
+
+body.lightning-active .hero h1 {
+    animation: text-shiver 0.4s infinite;
+    color: #ff0000;
+    text-shadow: 0 0 30px #ff0000, 0 0 50px #8b0000;
+}
+
+@keyframes text-shiver {
+    0% { transform: translate(2px, 1px) rotate(0deg); opacity: 1; }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); opacity: 0.8; }
+    20% { transform: translate(-3px, 0px) rotate(1deg); opacity: 0.4; }
+    30% { transform: translate(0px, 2px) rotate(0deg); opacity: 1; }
+    40% { transform: translate(1px, -1px) rotate(1deg); opacity: 0.9; }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); opacity: 0.3; }
+    60% { transform: translate(-3px, 1px) rotate(0deg); opacity: 1; }
+    70% { transform: translate(2px, 1px) rotate(-1deg); opacity: 0.7; }
+    80% { transform: translate(-1px, -1px) rotate(1deg); opacity: 1; }
+    90% { transform: translate(2px, 2px) rotate(0deg); opacity: 0.5; }
+    100% { transform: translate(1px, -2px) rotate(0deg); opacity: 1; }
+}
